@@ -12,7 +12,7 @@ services:
 
   lpmonitor-gui:
     restart: always
-    image: seapapa/lpmonitor-gui:arm64_0.6
+    image: seapapa/lpmonitor-gui:arm64_2.0
     network_mode: host
     container_name: lpmonitor-gui
     environment:
@@ -26,7 +26,7 @@ services:
 
   lpmonitor:
     restart: always
-    image: seapapa/lpmonitor:arm64_1.0
+    image: seapapa/lpmonitor:arm64_2.0
     network_mode: host
     container_name: lpmonitor
     privileged: true
@@ -46,9 +46,5 @@ services:
 volumes:
   sql_data:
 
-
-#docker buildx build --platform linux/arm64 -f docker/lpmonitor/Dockerfile.easy  -t seapapa/lpmonitor:arm64_1.0 . --push
-#docker buildx build --platform linux/arm64 -f docker/gui/Dockerfile.easy  -t seapapa/lpmonitor-gui:arm64_0.6 . --push
-#docker buildx build --platform linux/arm64,linux/amd64 -f docker/postgres/Dockerfile -t seapapa/postgres:10.18 . --push
 
 
