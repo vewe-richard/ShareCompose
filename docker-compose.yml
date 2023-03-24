@@ -1,0 +1,54 @@
+
+version: "3.0"
+services:
+  lpmonitor-sql:
+    restart: always
+    image: seapapa/postgres:10.18
+    network_mode: host
+    container_name: lpmonitor-sql
+    volumes:
+      - /etc/localtime:/etc/localtime
+      - sql_data:/var/lib/postgresql/data
+
+  lpmonitor-gui:
+    restart: always
+    image: seapapa/lpmonitor-gui:arm64_0.6
+    network_mode: host
+    container_name: lpmonitor-gui
+    environment:
+      DISPLAY: $DISPLAY
+    volumes:
+      - $HOME:/data
+      - /etc/localtime:/etc/localtime
+      - /tmp/.X11-unix/:/tmp/.X11-unix/
+    depends_on:
+      - lpmonitor-sql
+
+  lpmonitor:
+    restart: always
+    image: seapapa/lpmonitor:arm64_1.0
+    network_mode: host
+    container_name: lpmonitor
+    privileged: true
+    volumes:
+      - $HOME:/data
+      - /dev/:/dev/
+      - /etc/localtime:/etc/localtime
+    depends_on:
+      - lpmonitor-gui
+    command:
+      - "/root/lpmonitor"
+      - "run"
+      -  "-country"
+      - "fr"
+      - "-test"
+
+volumes:
+  sql_data:
+
+
+#docker buildx build --platform linux/arm64 -f docker/lpmonitor/Dockerfile.easy  -t seapapa/lpmonitor:arm64_1.0 . --push
+#docker buildx build --platform linux/arm64 -f docker/gui/Dockerfile.easy  -t seapapa/lpmonitor-gui:arm64_0.6 . --push
+#docker buildx build --platform linux/arm64,linux/amd64 -f docker/postgres/Dockerfile -t seapapa/postgres:10.18 . --push
+
+
