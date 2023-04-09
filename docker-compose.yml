@@ -12,7 +12,7 @@ services:
 
   lpmonitor-gui:
     restart: always
-    image: seapapa/lpmonitor-gui:arm64_2.1
+    image: seapapa/lpmonitor-gui:arm64_2.2
     network_mode: host
     container_name: lpmonitor-gui
     environment:
@@ -26,7 +26,7 @@ services:
 
   lpmonitor:
     restart: always
-    image: seapapa/lpmonitor:arm64_2.1
+    image: seapapa/lpmonitor:arm64_2.2
     network_mode: host
     container_name: lpmonitor
     privileged: true
